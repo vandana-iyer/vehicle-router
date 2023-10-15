@@ -1,0 +1,7 @@
+# Binaries for programs
+*.exe
+*.dll
+
+# IDEs
+.vscode/
+.idea/
