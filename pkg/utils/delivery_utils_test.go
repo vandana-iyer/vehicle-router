@@ -7,21 +7,6 @@ import (
 	"testing"
 )
 
-func TestTimeToDeliverLoad(t *testing.T) {
-	start := Location{}
-	load := Load{
-		LoadId:  12,
-		Pickup:  Location{Latitude: 50.0, Longitude: 50.0},
-		Dropoff: Location{Latitude: 100.0, Longitude: 100.0}}
-
-	got := roundTo2DecimalPlaces(TimeToDeliverLoad(start, load))
-	want := 282.84
-
-	if got != want {
-		t.Errorf("got %.2f want %.2f", got, want)
-	}
-}
-
 func TestTotalCost(t *testing.T) {
 	got := roundTo2DecimalPlaces(TotalCost(getMockDriverDeliveryAssignments()))
 	want := 1032.44
@@ -44,8 +29,8 @@ func roundTo2DecimalPlaces(number float64) float64 {
 	return math.Round(number*100) / 100
 }
 
-func getMockDriverDeliveryAssignments() []DriverDeliveryAssignment {
-	return []DriverDeliveryAssignment{
+func getMockDriverDeliveryAssignments() []*DriverDeliveryAssignment {
+	return []*DriverDeliveryAssignment{
 		{DriverId: 1, Loads: []Load{
 			{LoadId: 1, Pickup: Location{-50.1, 80.0}, Dropoff: Location{90.1, 12.2}},
 			{LoadId: 2, Pickup: Location{-24.5, -19.2}, Dropoff: Location{98.5, 1.8}},

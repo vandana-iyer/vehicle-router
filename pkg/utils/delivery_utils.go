@@ -4,17 +4,7 @@ import "com.vorto.vehiclerouter/pkg/models"
 
 const CostPerDriver = 500.0
 
-// TimeToDeliverLoad calculates the total duration required to transport a load
-// from a specified starting location to the load's drop-off point and then
-// return to the Depot.
-func TimeToDeliverLoad(currentLocation models.Location, load models.Load) float64 {
-	pickupDuration := currentLocation.TravelDuration(load.Pickup)
-	dropoffDuration := load.Pickup.TravelDuration(load.Dropoff)
-	returnToDepotDuration := load.Dropoff.TravelDuration(models.Location{})
-	return pickupDuration + dropoffDuration + returnToDepotDuration
-}
-
-func TotalCost(assignments []models.DriverDeliveryAssignment) float64 {
+func TotalCost(assignments []*models.DriverDeliveryAssignment) float64 {
 	driverCost := CostPerDriver * float64(len(assignments))
 
 	totalDeliveryTime := 0.0
@@ -24,7 +14,7 @@ func TotalCost(assignments []models.DriverDeliveryAssignment) float64 {
 	return driverCost + totalDeliveryTime
 }
 
-func DeliveryScheduleWithLoadIds(driversAssignment []models.DriverDeliveryAssignment) [][]int {
+func DeliveryScheduleWithLoadIds(driversAssignment []*models.DriverDeliveryAssignment) [][]int {
 	var loadIDsList [][]int
 
 	for _, driverAssignment := range driversAssignment {

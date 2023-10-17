@@ -10,5 +10,5 @@ const (
 // aimed at optimizing vehicle routing tasks. Implementations of this interface encapsulate
 // specific strategies to determine the most efficient path for drivers to deliver loads.
 type RoutingStrategy interface {
-	ScheduleLoads(loads []models.Load) []models.DriverDeliveryAssignment
+	ScheduleLoads(loads []models.Load) []*models.DriverDeliveryAssignment
 }

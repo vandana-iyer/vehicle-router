@@ -3,7 +3,6 @@ package loadproximity
 import (
 	. "com.vorto.vehiclerouter/pkg/models"
 	"com.vorto.vehiclerouter/pkg/routing"
-	"com.vorto.vehiclerouter/pkg/utils"
 )
 
 // ClosestLoadGreedy is a greedy routing strategy that continuously selects
@@ -12,28 +11,25 @@ import (
 // distance to each other.
 type ClosestLoadGreedy struct{}
 
-func (cg *ClosestLoadGreedy) ScheduleLoads(loads []Load) []DriverDeliveryAssignment {
-	var assignments []DriverDeliveryAssignment
-	assignment := DriverDeliveryAssignment{DriverId: 1}
-	currentLocation := Location{}
+func (cg *ClosestLoadGreedy) ScheduleLoads(loads []Load) []*DriverDeliveryAssignment {
+	var assignments []*DriverDeliveryAssignment
+	assignment := &DriverDeliveryAssignment{DriverId: 1}
 
 	for len(loads) > 0 {
 		// Find the job closest to the current location
-		closestLoadIndex := findClosestLoadIndex(currentLocation, loads)
+		closestLoadIndex := findClosestLoadIndex(assignment.GetDriverLocation(), loads)
 		load := loads[closestLoadIndex]
 
-		deliveryTimeFromCurrentLocation := utils.TimeToDeliverLoad(currentLocation, load)
+		deliveryTimeFromCurrentLocation := assignment.CalculateDeliveryTime(load)
 
 		if assignment.TotalDeliveryTime+deliveryTimeFromCurrentLocation > routing.MaxTime {
 			assignments = append(assignments, assignment)
-			assignment = DriverDeliveryAssignment{DriverId: assignment.DriverId + 1}
-			currentLocation = Location{}
+			assignment = &DriverDeliveryAssignment{DriverId: assignment.DriverId + 1}
 			continue
 		}
 
 		assignment.Loads = append(assignment.Loads, load)
 		assignment.TotalDeliveryTime += deliveryTimeFromCurrentLocation
-		currentLocation = load.Dropoff
 
 		// Remove the load from the list of pending loads
 		loads = append(loads[:closestLoadIndex], loads[closestLoadIndex+1:]...)

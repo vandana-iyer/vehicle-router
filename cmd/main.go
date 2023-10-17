@@ -48,7 +48,7 @@ func getLoads(filePath string) []Load {
 //
 // This means one driver does load 1; another driver does load 4 followed by load 2;
 // and a final driver does load 3.
-func printSolution(assignments []DriverDeliveryAssignment) {
+func printSolution(assignments []*DriverDeliveryAssignment) {
 	for _, assignment := range assignments {
 		fmt.Printf("[%s]\n", strings.Join(extractLoadIdAndConvertToStrArr(assignment.Loads), ","))
 	}
