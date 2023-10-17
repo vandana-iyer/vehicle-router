@@ -20,8 +20,8 @@ func TestScheduleLoads(t *testing.T) {
 
 		got := utils.DeliveryScheduleWithLoadIds(strategyInstance.ScheduleLoads(loads))
 		want := [][]int{
-			{1, 4, 2},
-			{3},
+			{1, 4},
+			{2, 3},
 		}
 
 		if !reflect.DeepEqual(got, want) {

@@ -15,7 +15,7 @@ func TestTimeToDeliverLoad(t *testing.T) {
 		Dropoff: Location{Latitude: 100.0, Longitude: 100.0}}
 
 	got := roundTo2DecimalPlaces(TimeToDeliverLoad(start, load))
-	want := 141.42
+	want := 282.84
 
 	if got != want {
 		t.Errorf("got %.2f want %.2f", got, want)

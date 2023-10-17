@@ -27,7 +27,7 @@ func TestProcess(t *testing.T) {
 	got := buf.String()
 
 	// Expected output
-	want := "[3,1,4]\n[2]\n"
+	want := "[3,1]\n[2,4]\n"
 
 	if got != want {
 		t.Errorf("Got:\n%s \nBut want:\n%s", got, want)
